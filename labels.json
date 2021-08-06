@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Priority: Critical",
+    "color": "#d50000",
+    "description": "우선순위: 긴급"
+  },
+  {
+    "name": "Priority: High",
+    "color": "#ff6d00",
+    "description": "우선순위: 높음"
+  },
+  {
+    "name": "Priority: Low",
+    "color": "#64dd17",
+    "description": "우선순위: 낮음"
+  },
+  {
+    "name": "Priority: Medium",
+    "color": "#ffd600",
+    "description": "우선순위: 중간"
+  },
+  {
+    "name": "Status: Available",
+    "color": "#e8f5e9",
+    "description": "상태: 진행 가능, 작업을 시작할 수 있는 Issue 또는 PR"
+  },
+  {
+    "name": "Status: In Progress",
+    "color": "#e0f2f1",
+    "description": "상태: 진행 중, 작업 중인 Issue 또는 PR"
+  },
+  {
+    "name": "Status: On Hold",
+    "color": "#fce4ec",
+    "description": "상태: 보류, 먼저 처리해야 하는 작업이 있는 Issue 또는 PR"
+  },
+  {
+    "name": "Status: Pending",
+    "color": "#fff8e1",
+    "description": "상태: 대기, 작업 대기 중인 Issue 또는 PR"
+  },
+  {
+    "name": "Status: Review Needed",
+    "color": "#f9fbe7",
+    "description": "상태: 리뷰 필요, 검증이 필요한 Issue 또는 PR"
+  },
+  {
+    "name": "Type: Bug",
+    "color": "#ff8a65",
+    "description": "분류: 버그"
+  },
+  {
+    "name": "Type: Documentation",
+    "color": "#4fc3f7",
+    "description": "분류: 문서화"
+  },
+  {
+    "name": "Type: Enhancement",
+    "color": "#7986cb",
+    "description": "분류: 기능 개선"
+  },
+  {
+    "name": "Type: Feature",
+    "color": "#64b5f6",
+    "description": "분류: 기능 추가"
+  },
+  {
+    "name": "Type: Question",
+    "color": "#ba68c8",
+    "description": "분류: 질문"
+  },
+  {
+    "name": "Type: Refactor",
+    "color": "#9575cd",
+    "description": "분류: 리팩터링"
+  },
+  {
+    "name": "Type: Test",
+    "color": "#4dd0e1",
+    "description": "분류: 테스팅"
+  }
+]
