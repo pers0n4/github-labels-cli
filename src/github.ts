@@ -9,6 +9,16 @@ export const GithubRestApi = Octokit.plugin(restEndpointMethods);
 export const GithubRestApiClient = (token: string): Octokit & Api =>
   new GithubRestApi({ auth: token });
 
+export const validateRepository =
+  (error: Error = new Error("Invalid repository name")) =>
+  (repository: string): [string, string] => {
+    const repositoryRegexp = /^([\w-.]+)\/([\w-.]+)$/;
+    if (!repositoryRegexp.test(repository)) {
+      throw error;
+    }
+    return repository.split("/") as [string, string];
+  };
+
 const listLabels = async (
   octokit: Octokit & Api,
   owner: string,
