@@ -14,7 +14,7 @@ config();
 
 const { name, version } = {
   name: "github-labels-cli",
-  version: "0.1.2",
+  version: "0.1.3",
 } as const;
 
 program
