@@ -1,9 +1,6 @@
 #!/usr/bin/env node
-import "dotenv/config";
-
 import { program } from "commander";
-
-import { name, version } from "../package.json";
+import { config } from "dotenv";
 
 import {
   clearLabels,
@@ -12,6 +9,11 @@ import {
   printLabels,
   validateRepositoryArgument,
 } from "./actions";
+
+config();
+
+const name = process.env["npm_package_name"] as string;
+const version = process.env["npm_package_version"] as string;
 
 program
   .name(name)
