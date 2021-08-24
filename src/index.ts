@@ -12,8 +12,10 @@ import {
 
 config();
 
-const name = process.env["npm_package_name"] as string;
-const version = process.env["npm_package_version"] as string;
+const { name, version } = {
+  name: "github-labels-cli",
+  version: "0.1.2",
+} as const;
 
 program
   .name(name)

@@ -5,8 +5,10 @@ const commander_1 = require("commander");
 const dotenv_1 = require("dotenv");
 const actions_1 = require("./actions");
 dotenv_1.config();
-const name = process.env["npm_package_name"];
-const version = process.env["npm_package_version"];
+const { name, version } = {
+    name: "github-labels-cli",
+    version: "0.1.2",
+};
 commander_1.program
     .name(name)
     .version(version)
