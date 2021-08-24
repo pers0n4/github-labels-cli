@@ -1,6 +1,6 @@
 {
   "name": "github-labels-cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "GitHub Labels CLI",
   "keywords": [
     "cli",
@@ -21,7 +21,7 @@
   "main": "./dist/index.js",
   "types": "./dist/main.d.ts",
   "bin": {
-    "gh-labels": "./dist/gh-labels.js"
+    "github-labels-cli": "./dist/index.js"
   },
   "scripts": {
     "build": "rm -rf ./dist && tsc",
