@@ -1,5 +1,5 @@
 {
-  "name": "gh-labels",
+  "name": "github-labels-cli",
   "version": "0.1.0",
   "description": "GitHub Labels CLI",
   "keywords": [
@@ -9,12 +9,12 @@
     "typescript"
   ],
   "bugs": {
-    "url": "https://github.com/pers0n4/gh-labels/issues",
+    "url": "https://github.com/pers0n4/github-labels/issues",
     "email": "31337.persona@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pers0n4/gh-labels.git"
+    "url": "https://github.com/pers0n4/github-labels.git"
   },
   "license": "MIT",
   "author": "Dong-Young Kim <31337.persona@gmail.com>",
