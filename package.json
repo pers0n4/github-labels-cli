@@ -32,7 +32,6 @@
     "@octokit/core": "^3.5.1",
     "@octokit/plugin-rest-endpoint-methods": "^5.13.0",
     "commander": "^8.3.0",
-    "dotenv": "^10.0.0",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
