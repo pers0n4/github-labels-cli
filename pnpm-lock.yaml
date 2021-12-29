@@ -18,6 +18,7 @@ specifiers:
   inquirer: ^8.2.0
   lodash: ^4.17.21
   ora: ^6.0.1
+  prettier: ^2.5.1
   read-pkg-up: ^9.0.0
   ts-node: ^10.4.0
   typescript: ^4.5.4
@@ -42,7 +43,8 @@ devDependencies:
   eslint: 7.32.0
   eslint-config-prettier: 8.3.0_eslint@7.32.0
   eslint-plugin-import: 2.25.3_eslint@7.32.0
-  eslint-plugin-prettier: 3.4.0_94254c01413ebaf1ad99cec97ec78f12
+  eslint-plugin-prettier: 3.4.0_6e6a25a49a944db0fa38418c3ba4bc86
+  prettier: 2.5.1
   ts-node: 10.4.0_60413c50aed8ad69e811794bc2eb96b2
   typescript: 4.5.4
 
@@ -817,7 +819,7 @@ packages:
       tsconfig-paths: 3.12.0
     dev: true
 
-  /eslint-plugin-prettier/3.4.0_94254c01413ebaf1ad99cec97ec78f12:
+  /eslint-plugin-prettier/3.4.0_6e6a25a49a944db0fa38418c3ba4bc86:
     resolution: {integrity: sha512-UDK6rJT6INSfcOo545jiaOwB701uAIt2/dR7WnFQoGCVl1/EMqdANBmwUaqqQ45aXprsTGzSa39LI1PyuRBxxw==}
     engines: {node: '>=6.0.0'}
     peerDependencies:
@@ -830,6 +832,7 @@ packages:
     dependencies:
       eslint: 7.32.0
       eslint-config-prettier: 8.3.0_eslint@7.32.0
+      prettier: 2.5.1
       prettier-linter-helpers: 1.0.0
     dev: true
 
@@ -1717,6 +1720,12 @@ packages:
     engines: {node: '>=6.0.0'}
     dependencies:
       fast-diff: 1.2.0
+    dev: true
+
+  /prettier/2.5.1:
+    resolution: {integrity: sha512-vBZcPRUR5MZJwoyi3ZoyQlc1rXeEck8KgeC9AwwOn+exuxLxq5toTRDTSaVrXHxelDMHy9zlicw8u66yxoSUFg==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
     dev: true
 
   /progress/2.0.3:
