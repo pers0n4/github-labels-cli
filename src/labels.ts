@@ -1,6 +1,6 @@
 import * as palette from "./palette";
 
-export const defaultLabels = [
+export default [
   {
     name: "Priority: Critical",
     color: palette.red.A700,

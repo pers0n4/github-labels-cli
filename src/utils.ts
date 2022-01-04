@@ -1,3 +1,15 @@
+import { readPackageUpSync } from "read-pkg-up";
+
+export const readPackageJson = () => {
+  const foundPackage = readPackageUpSync();
+
+  if (!foundPackage) {
+    throw new Error("Could not find package.json");
+  }
+
+  return foundPackage?.packageJson;
+};
+
 class Color {
   private value: string;
 
@@ -6,35 +18,35 @@ class Color {
   }
 
   public validateColorHex = () => {
-    if (!/^#?([0-9a-f]{3}|[0-9a-f]{6})$/i.test(this.value)) {
-      throw new Error("Invalid color");
+    if (!/^#?([a-f\d]{3}|[a-f\d]{6})$/i.test(this.value)) {
+      throw new Error("Invalid color hex");
     }
     return this;
   };
 
   public rrggbb = () => {
     this.value = this.value.replace(
-      /^#?([0-9a-f])([0-9a-f])([0-9a-f])$/i,
+      /^#?([a-f\d])([a-f\d])([a-f\d])$/i,
       (_, r, g, b) => r + r + g + g + b + b,
     );
     return this;
   };
 
-  public prefixHash = (hasPrefix: boolean) => {
+  public hashPrefix = (hasPrefix: boolean) => {
     this.value = this.value.replace(
-      /^#?([0-9a-f]{6})$/i,
+      /^#?([a-f\d]{6})$/i,
       (_, hex) => `${hasPrefix ? "#" : ""}${hex}`,
     );
     return this;
   };
 
-  public toString = () => this.value.toLowerCase();
+  public toString = () => this.value.toString();
 }
 
 export const normalizeColorHex = (hex: string, hasPrefix = true): string =>
   new Color(hex)
     .validateColorHex()
     .rrggbb()
-    .prefixHash(hasPrefix)
+    .hashPrefix(hasPrefix)
     .toString()
     .toLowerCase();
