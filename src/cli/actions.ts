@@ -1,70 +1,59 @@
-import { Command, InvalidOptionArgumentError, OptionValues } from "commander";
 import { readFile, writeFile } from "fs/promises";
-import { differenceWith, isEqual } from "lodash";
+import { EOL } from "os";
 
-import { GithubRestApiClient, api, validateRepository } from "./github";
-import { Label } from "./types";
+import { GitHub, Label } from "../github";
+import { normalizeColorHex } from "../utils";
 
-export const validateRepositoryArgument = validateRepository(
-  new InvalidOptionArgumentError("Invalid repository name"),
-);
+import { validOwnerRepo } from "./helper";
 
-export const printLabels = async (
-  [owner, repo]: [string, string],
-  _: OptionValues,
-  command: Command,
-): Promise<void> => {
-  const client = GithubRestApiClient(command.parent?.opts()["token"]);
-  const labels = await api.listLabels(client, owner, repo);
+type Options = {
+  github: GitHub;
+};
 
-  console.log(labels);
+export const listLabels = async (repository: string, { github }: Options) => {
+  const [owner, repo] = validOwnerRepo(repository, true);
+  const { data } = await github.rest.issues.listLabelsForRepo({
+    owner,
+    repo,
+  });
+
+  console.log(data);
 };
 
 export const exportLabels = async (
-  [owner, repo]: [string, string],
-  options: OptionValues,
-  command: Command,
-): Promise<void> => {
-  const client = GithubRestApiClient(command.parent?.opts()["token"]);
-  const labels = await api.listLabels(client, owner, repo);
+  repository: string,
+  filename: string,
+  { github }: Options,
+) => {
+  const [owner, repo] = validOwnerRepo(repository, true);
+  const { data } = await github.rest.issues.listLabelsForRepo({
+    owner,
+    repo,
+  });
 
-  await writeFile(options["file"], JSON.stringify(labels, null, 2));
+  const labels = data.map(({ name, color, description }) => ({
+    name,
+    color: normalizeColorHex(color, true),
+    description,
+  }));
+
+  await writeFile(filename, JSON.stringify(labels, null, 2) + EOL);
 };
 
 export const importLabels = async (
-  [owner, repo]: [string, string],
-  options: OptionValues,
-  command: Command,
-): Promise<void> => {
-  const client = GithubRestApiClient(command.parent?.opts()["token"]);
-  const labels = await api.listLabels(client, owner, repo);
-
-  const differentLabels: Label[] = differenceWith(
-    JSON.parse(await readFile(options["file"], "utf8")),
-    labels,
-    isEqual,
+  repository: string,
+  filename: string,
+  { github }: Options,
+) => {
+  const [owner, repo] = validOwnerRepo(repository, true);
+  const { data: remoteLabels } = await github.rest.issues.listLabelsForRepo({
+    owner,
+    repo,
+  });
+  const localLabels: Label[] = JSON.parse(
+    await readFile(filename, { encoding: "utf8" }),
   );
 
-  for (const diffLabel of differentLabels) {
-    if (labels.find((label) => label.name === diffLabel.name)) {
-      console.log(`update label "${diffLabel.name}"`);
-      await api.updateLabel(client, { owner, repo, ...diffLabel });
-    } else {
-      console.log(`create label "${diffLabel.name}"`);
-      await api.createLabel(client, { owner, repo, ...diffLabel });
-    }
-  }
-};
-
-export const clearLabels = async (
-  [owner, repo]: [string, string],
-  _: OptionValues,
-  command: Command,
-): Promise<void> => {
-  const client = GithubRestApiClient(command.parent?.opts()["token"]);
-  const labels = await api.listLabels(client, owner, repo);
-
-  for (const { name } of labels) {
-    await api.deleteLabel(client, owner, repo, name);
-  }
+  console.log(remoteLabels);
+  console.log(localLabels);
 };

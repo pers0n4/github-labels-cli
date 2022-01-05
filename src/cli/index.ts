@@ -1,67 +1,25 @@
-import { program } from "commander";
+import { Command } from "commander";
+
+import { GitHub } from "../github";
 
 import {
-  clearLabels,
-  exportLabels,
-  importLabels,
-  printLabels,
-  validateRepositoryArgument,
-} from "./actions";
+  exportLabelsCommand,
+  importLabelsCommand,
+  listLabelsCommand,
+} from "./commands";
+import { githubTokenQuestion } from "./questions";
 
-const { name, version } = {
-  name: "github-labels-cli",
-  version: "0.1.3",
-} as const;
+const program = new Command();
 
 program
-  .name(name)
-  .version(version)
-  .description("A command line tool to manage GitHub labels")
-  .showHelpAfterError()
-  .option(
-    "-t, --token <token>",
-    "access token",
-    process.env["GITHUB_TOKEN"] as string,
-  );
+  .option("-t, --token <token>", "github access token")
+  .hook("preAction", async (self, subCommand) => {
+    const token = self.opts()["token"] ?? (await githubTokenQuestion());
+    const github = new GitHub({ auth: token });
+    subCommand.setOptionValue("github", github);
+  })
+  .addCommand(listLabelsCommand())
+  .addCommand(exportLabelsCommand())
+  .addCommand(importLabelsCommand());
 
-program
-  .command("list")
-  .argument("<repository>", "target owner/repo", validateRepositoryArgument)
-  .description("print all labels")
-  .action(printLabels);
-
-program
-  .command("export")
-  .argument("<repository>", "target owner/repo", validateRepositoryArgument)
-  .description("export all labels")
-  .option("-f, --file <filename>", "export filename", "labels.json")
-  .action(exportLabels)
-  .addHelpText(
-    "after",
-    `
-Examples:
-  ${name} export "owner/repo"
-  ${name} export "owner/repo" -f labels.json`,
-  );
-
-program
-  .command("import")
-  .argument("<repository>", "target owner/repo", validateRepositoryArgument)
-  .description("import all labels")
-  .option("-f, --file <filename>", "import filename", "labels.json")
-  .action(importLabels)
-  .addHelpText(
-    "after",
-    `
-Examples:
-  ${name} import "owner/repo"
-  ${name} import "owner/repo" -f labels.json`,
-  );
-
-program
-  .command("clear")
-  .argument("<repository>", "target owner/repo", validateRepositoryArgument)
-  .description("remove all labels")
-  .action(clearLabels);
-
-program.parse(process.argv);
+export default program;

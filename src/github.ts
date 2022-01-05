@@ -7,6 +7,11 @@ import {
 export const GitHub = Octokit.plugin(restEndpointMethods);
 export type GitHub = InstanceType<typeof GitHub>;
 
+export type Label = Pick<
+  RestEndpointMethodTypes["issues"]["getLabel"]["response"]["data"],
+  "name" | "description" | "color"
+>;
+
 export type ListLabelsForRepoReponse =
   RestEndpointMethodTypes["issues"]["listLabelsForRepo"]["response"];
 
