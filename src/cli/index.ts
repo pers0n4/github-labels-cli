@@ -7,12 +7,13 @@ import {
   importLabelsCommand,
   listLabelsCommand,
 } from "./commands";
+import { githubTokenOption } from "./helper";
 import { githubTokenQuestion } from "./questions";
 
 const program = new Command();
 
 program
-  .option("-t, --token <token>", "github access token")
+  .addOption(githubTokenOption)
   .hook("preAction", async (self, subCommand) => {
     const token = self.opts()["token"] ?? (await githubTokenQuestion());
     const github = new GitHub({ auth: token });

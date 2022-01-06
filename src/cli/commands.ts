@@ -1,12 +1,7 @@
-import { Argument, Command } from "commander";
+import { Command } from "commander";
 
 import { exportLabels, importLabels, listLabels } from "./actions";
-import { validOwnerRepo } from "./helper";
-
-const repositoryArgument = new Argument(
-  "<owner/repo>",
-  "github repository path to operate",
-).argParser((repository) => validOwnerRepo(repository));
+import { repositoryArgument } from "./helper";
 
 export const listLabelsCommand = () => {
   const command = new Command("list");
