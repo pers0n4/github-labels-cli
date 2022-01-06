@@ -77,11 +77,6 @@ export const importLabels = async (
     label: { name, color, description },
     method,
   } of labels) {
-    console.log({
-      name,
-      color: normalizeColorHex(color, false),
-      description,
-    });
     await github.rest.issues[method]({
       owner,
       repo,
