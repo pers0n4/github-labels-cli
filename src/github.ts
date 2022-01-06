@@ -1,84 +1,22 @@
 import { Octokit } from "@octokit/core";
-import { restEndpointMethods } from "@octokit/plugin-rest-endpoint-methods";
-import { Api } from "@octokit/plugin-rest-endpoint-methods/dist-types/types";
+import {
+  RestEndpointMethodTypes,
+  restEndpointMethods,
+} from "@octokit/plugin-rest-endpoint-methods";
 
-import { normalizeColorHex } from "./color";
-import { CreateLabelParamers, Label, UpdateLabelParamers } from "./types";
+export const GitHub = Octokit.plugin(restEndpointMethods);
+export type GitHub = InstanceType<typeof GitHub>;
 
-export const GithubRestApi = Octokit.plugin(restEndpointMethods);
-export const GithubRestApiClient = (token: string): Octokit & Api =>
-  new GithubRestApi({ auth: token });
+export type Label = Pick<
+  RestEndpointMethodTypes["issues"]["getLabel"]["response"]["data"],
+  "name" | "color"
+> & { description?: string };
 
-export const validateRepository =
-  (error: Error = new Error("Invalid repository name")) =>
-  (repository: string): [string, string] => {
-    const repositoryRegexp = /^([\w-.]+)\/([\w-.]+)$/;
-    if (!repositoryRegexp.test(repository)) {
-      throw error;
-    }
-    return repository.split("/") as [string, string];
-  };
+export type ListLabelsForRepoReponse =
+  RestEndpointMethodTypes["issues"]["listLabelsForRepo"]["response"];
 
-const listLabels = async (
-  octokit: Octokit & Api,
-  owner: string,
-  repo: string,
-): Promise<Label[]> => {
-  const { data } = await octokit.rest.issues.listLabelsForRepo({
-    owner,
-    repo,
-  });
-  return data
-    .map(({ name, color, description }) => ({
-      name,
-      color: normalizeColorHex(color, true),
-      description: description || undefined,
-    }))
-    .sort(({ name: a }, { name: b }) => a.localeCompare(b));
-};
+export type CreateLabelParamers =
+  RestEndpointMethodTypes["issues"]["createLabel"]["parameters"];
 
-const createLabel = async (
-  octokit: Octokit & Api,
-  { owner, repo, name, color, description }: CreateLabelParamers,
-): Promise<void> => {
-  await octokit.rest.issues.createLabel({
-    owner,
-    repo,
-    name,
-    color: color && normalizeColorHex(color, false),
-    description,
-  });
-};
-
-const updateLabel = async (
-  octokit: Octokit & Api,
-  { owner, repo, name, color, description }: UpdateLabelParamers,
-): Promise<void> => {
-  await octokit.rest.issues.updateLabel({
-    owner,
-    repo,
-    name,
-    color: color && normalizeColorHex(color, false),
-    description,
-  });
-};
-
-const deleteLabel = async (
-  octokit: Octokit & Api,
-  owner: string,
-  repo: string,
-  name: string,
-): Promise<void> => {
-  await octokit.rest.issues.deleteLabel({
-    owner,
-    repo,
-    name,
-  });
-};
-
-export const api = {
-  listLabels,
-  createLabel,
-  updateLabel,
-  deleteLabel,
-};
+export type UpdateLabelParamers =
+  RestEndpointMethodTypes["issues"]["updateLabel"]["parameters"];

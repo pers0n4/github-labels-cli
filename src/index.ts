@@ -1,71 +1,13 @@
-#!/usr/bin/env node
-import { program } from "commander";
-import { config } from "dotenv";
+#!node --experimental-specifier-resolution=node
+import cli from "./cli";
+import { readPackageJson } from "./utils";
 
-import {
-  clearLabels,
-  exportLabels,
-  importLabels,
-  printLabels,
-  validateRepositoryArgument,
-} from "./actions";
+const { name, version } = readPackageJson();
 
-config();
-
-const { name, version } = {
-  name: "github-labels-cli",
-  version: "0.1.3",
-} as const;
-
-program
+cli
   .name(name)
   .version(version)
-  .description("A command line tool to manage GitHub labels")
+  .description("A command line tool for manage GitHub labels")
   .showHelpAfterError()
-  .option(
-    "-t, --token <token>",
-    "access token",
-    process.env["GITHUB_TOKEN"] as string,
-  );
-
-program
-  .command("list")
-  .argument("<repository>", "target owner/repo", validateRepositoryArgument)
-  .description("print all labels")
-  .action(printLabels);
-
-program
-  .command("export")
-  .argument("<repository>", "target owner/repo", validateRepositoryArgument)
-  .description("export all labels")
-  .option("-f, --file <filename>", "export filename", "labels.json")
-  .action(exportLabels)
-  .addHelpText(
-    "after",
-    `
-Examples:
-  ${name} export "owner/repo"
-  ${name} export "owner/repo" -f labels.json`,
-  );
-
-program
-  .command("import")
-  .argument("<repository>", "target owner/repo", validateRepositoryArgument)
-  .description("import all labels")
-  .option("-f, --file <filename>", "import filename", "labels.json")
-  .action(importLabels)
-  .addHelpText(
-    "after",
-    `
-Examples:
-  ${name} import "owner/repo"
-  ${name} import "owner/repo" -f labels.json`,
-  );
-
-program
-  .command("clear")
-  .argument("<repository>", "target owner/repo", validateRepositoryArgument)
-  .description("remove all labels")
-  .action(clearLabels);
-
-program.parse(process.argv);
+  .showSuggestionAfterError()
+  .parseAsync(process.argv);
