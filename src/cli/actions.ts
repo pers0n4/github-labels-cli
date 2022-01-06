@@ -22,6 +22,7 @@ export const listLabels = async (repository: string, { github }: Options) => {
   });
 
   console.log(data);
+  console.log(`Total: ${data.length}`);
 };
 
 export const exportLabels = async (
