@@ -6,6 +6,7 @@ import {
   exportLabelsCommand,
   importLabelsCommand,
   listLabelsCommand,
+  removeLabelsCommand,
   sampleLabelsCommand,
 } from "./commands";
 import { githubTokenOption } from "./helper";
@@ -27,6 +28,7 @@ program
   .addCommand(listLabelsCommand())
   .addCommand(exportLabelsCommand())
   .addCommand(importLabelsCommand())
+  .addCommand(removeLabelsCommand())
   .addCommand(sampleLabelsCommand());
 
 export default program;

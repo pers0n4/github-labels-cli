@@ -6,6 +6,7 @@ import defaultLabels from "../labels";
 import { normalizeColorHex } from "../utils";
 
 import { validOwnerRepo } from "./helper";
+import { removeLabelsQuestion } from "./questions";
 
 type Options = {
   github: GitHub;
@@ -83,6 +84,24 @@ export const importLabels = async (
       name,
       color: normalizeColorHex(color, false),
       description,
+    });
+  }
+};
+
+export const removeLabels = async (repository: string, { github }: Options) => {
+  const [owner, repo] = validOwnerRepo(repository, true);
+  const { data } = await github.rest.issues.listLabelsForRepo({
+    owner,
+    repo,
+  });
+
+  const selectedLabels = await removeLabelsQuestion(data);
+
+  for (const name of selectedLabels) {
+    await github.rest.issues.deleteLabel({
+      owner,
+      repo,
+      name,
     });
   }
 };

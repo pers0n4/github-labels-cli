@@ -4,6 +4,7 @@ import {
   exportLabels,
   importLabels,
   listLabels,
+  removeLabels,
   sampleLabels,
 } from "./actions";
 import { repositoryArgument } from "./helper";
@@ -39,6 +40,18 @@ export const importLabelsCommand = () => {
     .addArgument(repositoryArgument)
     .argument("[filename]", "filename to import")
     .action(importLabels);
+
+  return command;
+};
+
+export const removeLabelsCommand = () => {
+  const command = new Command("remove");
+
+  command
+    .description("remove labels from a repository")
+    .addArgument(repositoryArgument)
+    // .argument("[labels...]", "labels to remove")
+    .action(removeLabels);
 
   return command;
 };

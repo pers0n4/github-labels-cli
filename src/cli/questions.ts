@@ -1,5 +1,7 @@
 import inquirer from "inquirer";
 
+import { ListLabelsForRepoReponse } from "../github";
+
 export const ownerRepoQuestion = async () => {
   const { path } = await inquirer.prompt<{ path: string }>({
     type: "input",
@@ -34,4 +36,22 @@ export const githubTokenQuestion = async () => {
   });
 
   return token;
+};
+
+export const removeLabelsQuestion = async (
+  labels: ListLabelsForRepoReponse["data"],
+) => {
+  const { selectedLabels } = await inquirer.prompt<{
+    selectedLabels: string[];
+  }>({
+    type: "checkbox",
+    name: "selectedLabels",
+    message: "Select labels to remove",
+    choices: labels.map(({ name }) => ({
+      name,
+      value: name,
+    })),
+  });
+
+  return selectedLabels;
 };
