@@ -24,6 +24,15 @@ program
     const token = self.opts()["token"] ?? (await githubTokenQuestion());
     const github = new GitHub({ auth: token });
     subCommand.setOptionValue("github", github);
+
+    try {
+      await github.rest.users.getAuthenticated();
+    } catch (error) {
+      if ((error as any).status === 401) {
+        console.error("Invalid token");
+      }
+      process.exit(1);
+    }
   })
   .addCommand(listLabelsCommand())
   .addCommand(exportLabelsCommand())
