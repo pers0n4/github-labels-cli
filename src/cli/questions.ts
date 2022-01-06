@@ -1,6 +1,6 @@
 import inquirer from "inquirer";
 
-import { ListLabelsForRepoReponse } from "../github";
+import type { ListLabelsForRepoReponse } from "../github.js";
 
 export const ownerRepoQuestion = async () => {
   const { path } = await inquirer.prompt<{ path: string }>({

@@ -1,6 +1,6 @@
 import { Command } from "commander";
 
-import { GitHub } from "../github";
+import { GitHub } from "../github.js";
 
 import {
   exportLabelsCommand,
@@ -8,9 +8,9 @@ import {
   listLabelsCommand,
   removeLabelsCommand,
   sampleLabelsCommand,
-} from "./commands";
-import { githubTokenOption } from "./helper";
-import { githubTokenQuestion } from "./questions";
+} from "./commands.js";
+import { githubTokenOption } from "./helper.js";
+import { githubTokenQuestion } from "./questions.js";
 
 const program = new Command();
 

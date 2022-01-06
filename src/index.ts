@@ -1,6 +1,6 @@
-#!node --experimental-specifier-resolution=node
-import cli from "./cli";
-import { readPackageJson } from "./utils";
+#!/usr/bin/env node
+import cli from "./cli/index.js";
+import { readPackageJson } from "./utils.js";
 
 const { name, version } = readPackageJson();
 
