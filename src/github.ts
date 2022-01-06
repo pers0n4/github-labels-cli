@@ -9,8 +9,8 @@ export type GitHub = InstanceType<typeof GitHub>;
 
 export type Label = Pick<
   RestEndpointMethodTypes["issues"]["getLabel"]["response"]["data"],
-  "name" | "description" | "color"
->;
+  "name" | "color"
+> & { description?: string };
 
 export type ListLabelsForRepoReponse =
   RestEndpointMethodTypes["issues"]["listLabelsForRepo"]["response"];

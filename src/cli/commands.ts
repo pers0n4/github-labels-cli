@@ -32,7 +32,7 @@ export const importLabelsCommand = () => {
   command
     .description("import labels from a file")
     .addArgument(repositoryArgument)
-    .argument("[filename]", "filename to import", "labels.json")
+    .argument("[filename]", "filename to import")
     .action(importLabels);
 
   return command;

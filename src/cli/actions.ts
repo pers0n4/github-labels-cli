@@ -54,6 +54,39 @@ export const importLabels = async (
     await readFile(filename, { encoding: "utf8" }),
   );
 
-  console.log(remoteLabels);
-  console.log(localLabels);
+  const labels = localLabels.reduce<
+    { label: Label; method: "createLabel" | "updateLabel" }[]
+  >((accumulator, label) => {
+    const remoteLabel = remoteLabels.find(
+      ({ name, color, description }) =>
+        name === label.name &&
+        (color !== label.color || description !== label.description),
+    );
+
+    return [
+      ...accumulator,
+      {
+        label,
+        method: remoteLabel ? "updateLabel" : "createLabel",
+      },
+    ];
+  }, []);
+
+  for (const {
+    label: { name, color, description },
+    method,
+  } of labels) {
+    console.log({
+      name,
+      color: normalizeColorHex(color, false),
+      description,
+    });
+    await github.rest.issues[method]({
+      owner,
+      repo,
+      name,
+      color: normalizeColorHex(color, false),
+      description,
+    });
+  }
 };
