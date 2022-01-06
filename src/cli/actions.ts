@@ -2,6 +2,7 @@ import { readFile, writeFile } from "fs/promises";
 import { EOL } from "os";
 
 import { GitHub, Label } from "../github";
+import defaultLabels from "../labels";
 import { normalizeColorHex } from "../utils";
 
 import { validOwnerRepo } from "./helper";
@@ -89,4 +90,8 @@ export const importLabels = async (
       description,
     });
   }
+};
+
+export const sampleLabels = async (filename: string) => {
+  await writeFile(filename, JSON.stringify(defaultLabels, null, 2) + EOL);
 };

@@ -1,6 +1,11 @@
 import { Command } from "commander";
 
-import { exportLabels, importLabels, listLabels } from "./actions";
+import {
+  exportLabels,
+  importLabels,
+  listLabels,
+  sampleLabels,
+} from "./actions";
 import { repositoryArgument } from "./helper";
 
 export const listLabelsCommand = () => {
@@ -34,6 +39,17 @@ export const importLabelsCommand = () => {
     .addArgument(repositoryArgument)
     .argument("[filename]", "filename to import")
     .action(importLabels);
+
+  return command;
+};
+
+export const sampleLabelsCommand = () => {
+  const command = new Command("sample");
+
+  command
+    .description("create a sample labels file")
+    .argument("[filename]", "sample labels filename", "labels.json")
+    .action(sampleLabels);
 
   return command;
 };
