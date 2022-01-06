@@ -1,12 +1,10 @@
 {
+  "root": true,
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 2021,
-    "sourceType": "module"
-  },
-  "env": {
-    "es2021": true,
-    "node": true
+    "sourceType": "module",
+    "ecmaVersion": 2020,
+    "project": "./tsconfig.json"
   },
   "extends": [
     "eslint:recommended",
@@ -15,39 +13,61 @@
     "plugin:import/typescript",
     "plugin:prettier/recommended"
   ],
-  "plugins": ["@typescript-eslint", "import", "prettier"],
+  "plugins": ["@typescript-eslint", "import"],
   "rules": {
     "sort-imports": [
-      "warn",
+      "error",
       {
-        "ignoreDeclarationSort": true
+        "ignoreCase": false,
+        "ignoreDeclarationSort": true,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
+      }
+    ],
+
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "always",
+        "ts": "never"
       }
     ],
     "import/order": [
-      "warn",
+      "error",
       {
         "groups": [
-          ["builtin", "external"],
+          "builtin",
+          "external",
           "internal",
+          "unknown",
           "parent",
           "sibling",
           "index",
-          "type",
           "object",
-          "unknown"
+          "type"
         ],
-        "pathGroups": [
-          {
-            "pattern": "react",
-            "group": "external",
-            "position": "before"
-          }
-        ],
-        "pathGroupsExcludedImportTypes": [],
         "newlines-between": "always",
         "alphabetize": { "order": "asc", "caseInsensitive": false }
       }
     ],
-    "@typescript-eslint/member-ordering": "warn"
+
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      { "prefer": "type-imports" }
+    ]
+  },
+  "env": {
+    "node": true
+  },
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".js", ".ts"]
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".ts"]
+      }
+    }
   }
 }
