@@ -1,8 +1,7 @@
 import { Octokit } from "@octokit/core";
-import {
-  RestEndpointMethodTypes,
-  restEndpointMethods,
-} from "@octokit/plugin-rest-endpoint-methods";
+import { restEndpointMethods } from "@octokit/plugin-rest-endpoint-methods";
+
+import type { RestEndpointMethodTypes } from "@octokit/plugin-rest-endpoint-methods";
 
 export const GitHub = Octokit.plugin(restEndpointMethods);
 export type GitHub = InstanceType<typeof GitHub>;

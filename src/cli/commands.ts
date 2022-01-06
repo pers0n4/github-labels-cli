@@ -6,8 +6,8 @@ import {
   listLabels,
   removeLabels,
   sampleLabels,
-} from "./actions";
-import { repositoryArgument } from "./helper";
+} from "./actions.js";
+import { repositoryArgument } from "./helper.js";
 
 export const listLabelsCommand = () => {
   const command = new Command("list");

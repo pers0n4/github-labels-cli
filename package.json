@@ -1,6 +1,6 @@
 {
   "name": "github-labels-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "GitHub Labels CLI",
   "keywords": [
     "github",
@@ -26,7 +26,7 @@
     "github-labels-cli": "./dist/index.js"
   },
   "files": [
-    "./dist"
+    "dist/"
   ],
   "scripts": {
     "build": "tsc --build --clean && tsc --build",
@@ -40,7 +40,6 @@
     "chalk": "^4.1.2",
     "commander": "^8.3.0",
     "inquirer": "^8.2.0",
-    "lodash": "^4.17.21",
     "ora": "^6.0.1",
     "read-pkg-up": "^9.0.0"
   },
@@ -57,5 +56,11 @@
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.5.1",
     "typescript": "^4.5.4"
+  },
+  "publishConfig": {
+    "executableFiles": [
+      "./dist/index.js"
+    ],
+    "main": "./dist/index.js"
   }
 }

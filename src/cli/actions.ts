@@ -1,14 +1,16 @@
-import chalk from "chalk";
 import { readFile, writeFile } from "fs/promises";
-import { oraPromise } from "ora";
 import { EOL } from "os";
 
-import { GitHub, Label } from "../github";
-import defaultLabels from "../labels";
-import { normalizeColorHex } from "../utils";
+import chalk from "chalk";
+import { oraPromise } from "ora";
 
-import { validOwnerRepo } from "./helper";
-import { removeLabelsQuestion } from "./questions";
+import defaultLabels from "../labels.js";
+import { normalizeColorHex } from "../utils.js";
+
+import { validOwnerRepo } from "./helper.js";
+import { removeLabelsQuestion } from "./questions.js";
+
+import type { GitHub, Label } from "../github";
 
 type Options = {
   github: GitHub;
