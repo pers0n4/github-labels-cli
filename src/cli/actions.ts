@@ -1,4 +1,6 @@
+import chalk from "chalk";
 import { readFile, writeFile } from "fs/promises";
+import { oraPromise } from "ora";
 import { EOL } from "os";
 
 import { GitHub, Label } from "../github";
@@ -74,18 +76,21 @@ export const importLabels = async (
     ];
   }, []);
 
-  for (const {
-    label: { name, color, description },
-    method,
-  } of labels) {
-    await github.rest.issues[method]({
-      owner,
-      repo,
-      name,
-      color: normalizeColorHex(color, false),
-      description,
-    });
-  }
+  await oraPromise(async function (spinner) {
+    for (const {
+      label: { name, color, description },
+      method,
+    } of labels) {
+      spinner.text = `Importing labels: ${chalk.cyan(name)}`;
+      await github.rest.issues[method]({
+        owner,
+        repo,
+        name,
+        color: normalizeColorHex(color, false),
+        description,
+      });
+    }
+  }, "Removing labels");
 };
 
 export const removeLabels = async (repository: string, { github }: Options) => {
@@ -97,13 +102,16 @@ export const removeLabels = async (repository: string, { github }: Options) => {
 
   const selectedLabels = await removeLabelsQuestion(data);
 
-  for (const name of selectedLabels) {
-    await github.rest.issues.deleteLabel({
-      owner,
-      repo,
-      name,
-    });
-  }
+  await oraPromise(async function (spinner) {
+    for (const name of selectedLabels) {
+      spinner.text = `Removing label: ${chalk.cyan(name)}`;
+      await github.rest.issues.deleteLabel({
+        owner,
+        repo,
+        name,
+      });
+    }
+  }, "Removing labels");
 };
 
 export const sampleLabels = async (filename: string) => {
