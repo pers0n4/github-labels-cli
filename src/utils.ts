@@ -1,7 +1,12 @@
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+
 import { readPackageUpSync } from "read-pkg-up";
 
 export const readPackageJson = () => {
-  const foundPackage = readPackageUpSync();
+  const foundPackage = readPackageUpSync({
+    cwd: dirname(fileURLToPath(import.meta.url)),
+  });
 
   if (!foundPackage) {
     throw new Error("Could not find package.json");
